@@ -25,7 +25,13 @@ const Layout: React.FC<LayoutProps> = ({ children, currentTab, onTabChange }) =>
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      minHeight: '100vh',
+      height: '100vh',
+      overflow: 'hidden'
+    }}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -40,7 +46,17 @@ const Layout: React.FC<LayoutProps> = ({ children, currentTab, onTabChange }) =>
         </Toolbar>
       </AppBar>
 
-      <Container maxWidth="lg" sx={{ mt: 3 }}>
+      <Container 
+        maxWidth="lg" 
+        sx={{ 
+          mt: 3, 
+          mb: 3,
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden'
+        }}
+      >
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
           <Tabs value={currentTab} onChange={(_, newValue) => onTabChange(newValue)}>
             <Tab label="Lista de Clientes" />
@@ -48,7 +64,14 @@ const Layout: React.FC<LayoutProps> = ({ children, currentTab, onTabChange }) =>
           </Tabs>
         </Box>
 
-        {children}
+        <Box sx={{ 
+          flex: 1, 
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
+          {children}
+        </Box>
       </Container>
     </Box>
   );

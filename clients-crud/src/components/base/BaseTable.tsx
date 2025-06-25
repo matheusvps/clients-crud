@@ -247,8 +247,17 @@ function BaseTable<T>({
   };
 
   return (
-    <TableContainer component={Paper} sx={{ mt: 2 }}>
-      <Table>
+    <TableContainer 
+      component={Paper} 
+      sx={{ 
+        mt: 2,
+        maxHeight: 'calc(100vh - 400px)', // Altura máxima mais conservadora
+        minHeight: '400px', // Altura mínima para garantir visibilidade
+        overflow: 'auto',
+        flex: 1
+      }}
+    >
+      <Table stickyHeader>
         <TableHead>
           <TableRow sx={{ backgroundColor: 'primary.main' }}>
             {columns.map((column) => (
@@ -321,7 +330,7 @@ function BaseTable<T>({
               </React.Fragment>
             ))
           ) : (
-            renderRows(data)
+            renderRows(displayData)
           )}
         </TableBody>
       </Table>
@@ -335,17 +344,19 @@ function BaseTable<T>({
       )}
       
       {pagination && data.length > 0 && (
-        <TablePagination
-          component="div"
-          count={data.length}
-          page={page}
-          onPageChange={(_, newPage) => onPageChange?.(newPage)}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={(e) => onRowsPerPageChange?.(parseInt(e.target.value, 10))}
-          rowsPerPageOptions={rowsPerPageOptions}
-          labelRowsPerPage="Linhas por página:"
-          labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-        />
+        <Box sx={{ position: 'sticky', bottom: 0, backgroundColor: 'background.paper', borderTop: 1, borderColor: 'divider' }}>
+          <TablePagination
+            component="div"
+            count={data.length}
+            page={page}
+            onPageChange={(_, newPage) => onPageChange?.(newPage)}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={(e) => onRowsPerPageChange?.(parseInt(e.target.value, 10))}
+            rowsPerPageOptions={rowsPerPageOptions}
+            labelRowsPerPage="Linhas por página:"
+            labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+          />
+        </Box>
       )}
     </TableContainer>
   );

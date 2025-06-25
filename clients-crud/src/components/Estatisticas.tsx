@@ -97,80 +97,61 @@ const Estatisticas: React.FC = () => {
   const topClientes = obterTopClientes(clientes, 5);
 
   return (
-    <Box>
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      height: '100%',
+      overflow: 'auto'
+    }}>
       <Typography variant="h4" gutterBottom>
         📊 Dashboard de Estatísticas
       </Typography>
 
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+        Análise completa do desempenho dos clientes e métricas de vendas
+      </Typography>
+
       {/* Métricas Gerais */}
-      {metricas && (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 4 }}>
-          <BaseMetricCard
-            title="Total de Vendas"
-            value={formatarMoeda(metricas.totalVendasGeral)}
-            subtitle={`${clientes.length} clientes`}
-            icon={MoneyIcon}
-            iconColor="primary"
-            valueColor="primary"
-          />
+      <Typography variant="h5" gutterBottom>
+        📈 Métricas Gerais
+      </Typography>
+      
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, mb: 4 }}>
+        <BaseMetricCard
+          title="Total de Vendas"
+          value={formatarMoeda(metricas?.totalVendasGeral || 0)}
+          icon={MoneyIcon}
+          iconColor="success"
+          valueColor="success"
+        />
+        <BaseMetricCard
+          title="Média por Cliente"
+          value={formatarMoeda(metricas?.mediaVendas || 0)}
+          icon={TrendingUpIcon}
+          iconColor="info"
+          valueColor="info"
+        />
+        <BaseMetricCard
+          title="Clientes Ativos"
+          value={`${metricas?.clientesAtivos || 0} de ${metricas?.totalClientes || 0}`}
+          icon={PeopleIcon}
+          iconColor="warning"
+          valueColor="warning"
+        />
+        <BaseMetricCard
+          title="Frequência Média"
+          value={`${(metricas?.frequenciaMedia || 0).toFixed(1)} dias`}
+          icon={CartIcon}
+          iconColor="secondary"
+          valueColor="secondary"
+        />
+      </Box>
 
-          <BaseMetricCard
-            title="Média por Cliente"
-            value={formatarMoeda(metricas.mediaVendas)}
-            subtitle="Média geral"
-            icon={TrendingUpIcon}
-            iconColor="success"
-            valueColor="success"
-          />
-
-          <BaseMetricCard
-            title="Clientes Ativos"
-            value={metricas.clientesAtivos}
-            subtitle={`de ${metricas.totalClientes} total`}
-            icon={PeopleIcon}
-            iconColor="info"
-            valueColor="info"
-          />
-
-          <BaseMetricCard
-            title="Frequência Média"
-            value={metricas.frequenciaMedia.toFixed(1)}
-            subtitle="dias por cliente"
-            icon={CartIcon}
-            iconColor="warning"
-            valueColor="warning"
-          />
-        </Box>
-      )}
-
-      {/* Gráfico de vendas por dia */}
-      <BaseChartContainer title="📈 Evolução de Vendas por Dia">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={estatisticas.totalVendasPorDia}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis 
-              dataKey="data" 
-              tickFormatter={(value) => formatarData(value)}
-            />
-            <YAxis 
-              tickFormatter={(value) => formatarMoeda(value)}
-            />
-            <Tooltip 
-              labelFormatter={(value) => formatarData(value as string)}
-              formatter={(value: number) => [formatarMoeda(value), 'Total de Vendas']}
-            />
-            <Line 
-              type="monotone" 
-              dataKey="total" 
-              stroke="#8884d8" 
-              strokeWidth={3}
-              dot={{ fill: '#8884d8', strokeWidth: 2, r: 4 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </BaseChartContainer>
-
-      {/* Gráficos de comparação */}
+      {/* Gráficos */}
+      <Typography variant="h5" gutterBottom>
+        📈 Gráficos de Análise
+      </Typography>
+      
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, mb: 4 }}>
         {/* Gráfico de barras - Top 8 clientes */}
         <BaseChartContainer title="🏆 Top 8 Clientes por Volume de Vendas" flex="1 1 600px">
@@ -211,7 +192,7 @@ const Estatisticas: React.FC = () => {
         🎯 Clientes em Destaque
       </Typography>
       
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, mb: 4 }}>
         {/* Cliente com maior volume */}
         {estatisticas.clienteMaiorVolume && (
           <BaseClienteCard
@@ -244,7 +225,7 @@ const Estatisticas: React.FC = () => {
       </Box>
 
       {/* Lista dos top 5 clientes */}
-      <Paper sx={{ p: 3, mt: 4 }}>
+      <Paper sx={{ p: 3, mt: 4, mb: 4 }}>
         <Typography variant="h6" gutterBottom>
           📋 Ranking Completo dos Clientes
         </Typography>

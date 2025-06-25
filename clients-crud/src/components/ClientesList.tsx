@@ -379,7 +379,12 @@ const ClientesList: React.FC = () => {
   }
 
   return (
-    <Box>
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      height: '100%',
+      overflow: 'hidden'
+    }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h5">
           Lista de Clientes ({clientesFiltrados.length} de {clientes.length})
@@ -469,25 +474,27 @@ const ClientesList: React.FC = () => {
       )}
 
       {/* Tabela de Clientes */}
-      <BaseTable
-        data={clientesFiltrados}
-        columns={columns}
-        sortConfig={sortConfig}
-        onSort={handleSort}
-        loading={loading}
-        emptyMessage="Nenhum cliente encontrado com os filtros aplicados"
-        rowKey={(row) => row.id}
-        groupBy={groupBy}
-        onGroupByChange={handleGroupByChange}
-        groupConfigs={groupConfigs}
-        onGroupConfigChange={setGroupConfigs}
-        pagination={true}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        onPageChange={handlePageChange}
-        onRowsPerPageChange={handleRowsPerPageChange}
-        rowsPerPageOptions={[5, 10, 20, 50]}
-      />
+      <Box sx={{ flex: 1, overflow: 'hidden' }}>
+        <BaseTable
+          data={clientesFiltrados}
+          columns={columns}
+          sortConfig={sortConfig}
+          onSort={handleSort}
+          loading={loading}
+          emptyMessage="Nenhum cliente encontrado com os filtros aplicados"
+          rowKey={(row) => row.id}
+          groupBy={groupBy}
+          onGroupByChange={handleGroupByChange}
+          groupConfigs={groupConfigs}
+          onGroupConfigChange={setGroupConfigs}
+          pagination={true}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
+          rowsPerPageOptions={[5, 10, 20, 50]}
+        />
+      </Box>
 
       {/* Diálogo de Agrupamento */}
       <BaseGroupDialog
