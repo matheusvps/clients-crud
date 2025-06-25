@@ -8,8 +8,6 @@ import {
   List
 } from '@mui/material';
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -37,7 +35,6 @@ import {
 } from './base';
 import {
   formatarMoeda,
-  formatarData,
   calcularMetricasGerais,
   prepararDadosPizza,
   prepararDadosBarras,
