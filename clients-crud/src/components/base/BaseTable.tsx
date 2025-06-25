@@ -259,16 +259,20 @@ function BaseTable<T>({
     >
       <Table stickyHeader>
         <TableHead>
-          <TableRow sx={{ backgroundColor: 'primary.main' }}>
+          <TableRow>
             {columns.map((column) => (
               <TableCell
                 key={String(column.id)}
                 sx={{
+                  backgroundColor: 'primary.main',
                   color: 'white',
                   fontWeight: 'bold',
                   width: column.width,
                   textAlign: column.align || 'left',
                   cursor: (column.sortable || column.groupable) ? 'pointer' : 'default',
+                  zIndex: 2,
+                  position: 'sticky',
+                  top: 0,
                   '&:hover': (column.sortable || column.groupable) ? {
                     backgroundColor: 'primary.dark'
                   } : {}
